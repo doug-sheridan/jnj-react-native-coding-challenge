@@ -46,9 +46,6 @@ const getCharacters = async (): Promise<any[]> => {
       nameStartsWith: 'hulk',
     },
   });
-  // console.log(
-  //   'characters: ' + JSON.stringify(response?.data?.data?.results, null, 2),
-  // );
   if (response?.data?.data?.results) {
     return response.data.data.results;
   } else {

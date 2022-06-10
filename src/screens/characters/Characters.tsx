@@ -1,9 +1,11 @@
-import {Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {ReactNode} from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
+import {CharacterListItem} from './CharacterListItem';
+import {Loading} from '../../components/Loading';
 
 export type CharactersProps = {
-  onPress: () => void;
+  onPress: (character: MarvelCharacter) => void;
   characters: MarvelCharacter[];
 };
 
@@ -11,16 +13,33 @@ export type CharactersProps = {
  * The Characters list UI.
  */
 export const Characters = ({onPress, characters}: CharactersProps) => {
-  if (characters && characters.length > 0) {
-    console.log('characters: ' + JSON.stringify(characters));
-  }
+  const renderCharactersList = (): ReactNode[] => {
+    const results: ReactNode[] = [];
+    characters.map((character: MarvelCharacter, i: number) =>
+      results.push(
+        <TouchableOpacity key={i} onPress={() => onPress(character)}>
+          <CharacterListItem character={character} />
+        </TouchableOpacity>,
+      ),
+    );
+    return results;
+  };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Hello, Characters!</Text>
-      <TouchableOpacity onPress={onPress}>
-        <Text>Go to Character</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView contentContainerStyle={style.container}>
+      <Text>Characters</Text>
+      {characters && characters.length > 0 ? (
+        renderCharactersList()
+      ) : (
+        <Loading />
+      )}
+    </ScrollView>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingVertical: 40,
+  },
+});
