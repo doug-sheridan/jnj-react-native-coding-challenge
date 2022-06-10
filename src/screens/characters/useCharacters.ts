@@ -9,8 +9,12 @@ export const useCharacters = () => {
       const chars = await MarvelApi.getCharacters({});
       setCharacters(chars);
     }
-    fetchData();
-  }, []);
+    if (characters.length === 0) {
+      fetchData();
+    } else {
+      console.log('skipped fetch...');
+    }
+  });
 
   return characters;
 };

@@ -1,8 +1,9 @@
-import {ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {ReactNode} from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {CharacterListItem} from './CharacterListItem';
 import {Loading} from '../../components/Loading';
+import {Typography} from '../../components/Typography';
 
 export type CharactersProps = {
   onPress: (character: MarvelCharacter) => void;
@@ -27,7 +28,7 @@ export const Characters = ({onPress, characters}: CharactersProps) => {
 
   return (
     <ScrollView contentContainerStyle={style.container}>
-      <Text>Characters</Text>
+      <Typography variant="h">Marvel Characters</Typography>
       {characters && characters.length > 0 ? (
         renderCharactersList()
       ) : (
@@ -39,7 +40,6 @@ export const Characters = ({onPress, characters}: CharactersProps) => {
 
 const style = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingVertical: 40,
+    paddingVertical: 60,
   },
 });
