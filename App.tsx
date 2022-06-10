@@ -1,11 +1,19 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {CharacterContainer} from './src/screens/character/CharacterContainer';
+import {CharactersContainer} from './src/screens/characters/CharactersContainer';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Hello, MyApp!</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Characters" component={CharactersContainer} />
+        <Stack.Screen name="Character" component={CharacterContainer} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

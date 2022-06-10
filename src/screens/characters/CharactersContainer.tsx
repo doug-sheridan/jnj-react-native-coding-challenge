@@ -1,6 +1,14 @@
 import React from 'react';
 import {Characters} from './Characters';
+import {useCharacters} from './useCharacters';
 
-export const CharactersContainer = () => {
-  return <Characters />;
+// @ts-ignore
+export const CharactersContainer = ({navigation}) => {
+  const characters = useCharacters();
+
+  const onPress = () => {
+    navigation.navigate('Character');
+  };
+
+  return <Characters onPress={onPress} characters={characters} />;
 };
