@@ -3,6 +3,7 @@
 React Native coding challenge for JnJ.
 
 Candidate: Douglas Sheridan
+
 Started on: Jun 9, 2022 @ 8:27 pm PST
 
 # Description
