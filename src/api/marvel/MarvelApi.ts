@@ -28,22 +28,30 @@ const marvelRequest = ({
   return networkRequest({
     url,
     method,
-    params,
+    params: {
+      apikey: MARVEL_API_CREDENTIALS.publicKey,
+      ...params,
+    },
     data,
     headers: {...MARVEL_DEFAULT_HEADERS, ...headers},
   });
 };
 
+export type GetCharactersParams = {
+  nameStartsWith?: string | undefined;
+};
+
 /**
  * Gets a paged list of Marvel characters
  */
-const getCharacters = async (): Promise<any[]> => {
+const getCharacters = async ({
+  nameStartsWith = undefined,
+}: GetCharactersParams): Promise<any[]> => {
   const response = await marvelRequest({
     route: MARVEL_API_ROUTES.characters,
     method: 'GET',
     params: {
-      apikey: MARVEL_API_CREDENTIALS.publicKey,
-      nameStartsWith: 'hulk',
+      nameStartsWith,
     },
   });
   if (response?.data?.data?.results) {
@@ -60,9 +68,7 @@ const getCharacter = () => {
   return marvelRequest({
     route: MARVEL_API_ROUTES.characters,
     method: 'GET',
-    params: {
-      apikey: MARVEL_API_CREDENTIALS.publicKey,
-    },
+    params: {},
   });
 };
 

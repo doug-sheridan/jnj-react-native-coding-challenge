@@ -6,7 +6,7 @@ export const useCharacters = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const chars = await MarvelApi.getCharacters();
+      const chars = await MarvelApi.getCharacters({});
       setCharacters(chars);
     }
     fetchData();
