@@ -24,9 +24,9 @@ export const Character = ({character, moreInfoOnPress}: CharacterProps) => {
   console.log('character: ' + JSON.stringify(character));
 
   return (
-    <View>
+    <View style={styles.container}>
       <Image source={imageSource} style={styles.image} />
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView style={styles.scrollView}>
         <View style={styles.spacer} />
         <View style={styles.scrollContent}>
           <View style={{marginBottom: 20}}>
@@ -39,11 +39,15 @@ export const Character = ({character, moreInfoOnPress}: CharacterProps) => {
             <Typography variant="body" bold>
               Comics
             </Typography>
-            {character.comics.items.map((comic, i) => (
-              <Typography variant="body" key={i} style={styles.comicItem}>
-                {`• ${comic?.name}` || 'No description.'}
-              </Typography>
-            ))}
+            {character.comics.items?.length > 0 ? (
+              character.comics.items.map((comic, i) => (
+                <Typography variant="body" key={i} style={styles.comicItem}>
+                  {`• ${comic?.name}` || 'No description.'}
+                </Typography>
+              ))
+            ) : (
+              <Typography variant="body">No comics found.</Typography>
+            )}
           </View>
           <TouchableOpacity
             style={styles.moreInfoButton}
@@ -57,6 +61,9 @@ export const Character = ({character, moreInfoOnPress}: CharacterProps) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'black',
+  },
   image: {
     position: 'absolute',
     top: 0,
