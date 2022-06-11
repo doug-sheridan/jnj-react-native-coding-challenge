@@ -13,6 +13,7 @@ import {CharacterListItem} from './CharacterListItem';
 import {Typography} from '../../components/Typography';
 import {Loading} from '../../components/Loading';
 import {Colors} from '../../constants';
+import {isTablet} from '../../utils/DeviceInfoUtils';
 
 // true
 export type CharactersProps = {
@@ -61,7 +62,7 @@ export const Characters = ({
         <Image
           resizeMode="contain"
           source={require('../../../assets/marvel-logo.png')}
-          style={styles.logo}
+          style={isTablet ? styles.logoTablet : styles.logo}
         />
       </SafeAreaView>
       {!charactersError ? (
@@ -113,6 +114,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+  },
+  logoTablet: {
+    height: 200,
+    width: 200,
   },
   headerContainer: {
     backgroundColor: Colors.primary,

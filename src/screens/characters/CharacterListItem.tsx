@@ -25,7 +25,10 @@ export const CharacterListItem = ({character}: CharacterListItemProps) => {
       ]}>
       <Image style={styles.image} source={imageSource} />
       <View style={styles.scrim} />
-      <Typography variant="body" style={styles.text} color="white">
+      <Typography
+        variant={isTablet ? 'h' : 'body'}
+        style={styles.text}
+        color="white">
         {character.name}
       </Typography>
     </View>
