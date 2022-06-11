@@ -26,8 +26,8 @@ export const Character = ({character}: CharacterProps) => {
           <Typography variant="body">
             {character?.description || 'No description.'}
           </Typography>
-          {character.comics.items.map(comic => (
-            <Typography variant="body">
+          {character.comics.items.map((comic, i) => (
+            <Typography variant="body" key={i}>
               {comic?.name || 'No description.'}
             </Typography>
           ))}
