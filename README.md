@@ -46,7 +46,7 @@ You have until 11:59pm PDT on Mon Jun 13 to complete this challenge. When you ar
 - ✅ Show item detail view when tapping on any item in the list
 - ✅ Show any media associated with the item
 - **Stretch goals:**
-  - ❌ Cache/Persist data locally across app launches
+  - ✅ Cache/Persist data locally across app launches
   - ❌ Responsive UI wrt different device sizes
 
 ### Key Libraries Used

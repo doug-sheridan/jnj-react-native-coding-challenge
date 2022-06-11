@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import MarvelApi from '../../api/marvel/MarvelApi';
+import {StorageUtils} from '../../utils/StorageUtils';
 
 /**
  * useCharacters -
@@ -53,18 +54,23 @@ export const useCharacters = () => {
         setError(e.message);
         setLoading(false);
       });
-  }, [characters.length, pageSize]);
+  }, [pageSize]);
 
   /**
    * init -
    * Initializes the useCharacters hook with data from the server.
    */
-  const init = useCallback(() => {
-    if (characters.length === 0) {
-      fetchCharacters();
+  const init = useCallback(async () => {
+    const storedCharacters = await StorageUtils.readCharactersFromStorage();
+    if (storedCharacters?.length > 0) {
+      console.log('Characters loaded from local storage!');
+      setCharacters(storedCharacters);
     } else {
-      console.log('Characters already fetched, skipping...');
-      setLoading(false);
+      if (characters.length === 0) {
+        fetchCharacters();
+      } else {
+        console.log('Characters already fetched, skipping...');
+      }
     }
   }, [characters.length, fetchCharacters]);
 
@@ -73,7 +79,7 @@ export const useCharacters = () => {
    */
   useEffect(() => {
     init();
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
@@ -128,6 +134,10 @@ export const useCharacters = () => {
       console.log("You're already at the end of the list. Skipping...");
     }
   };
+
+  useEffect(() => {
+    StorageUtils.storeCharacters(characters);
+  }, [characters]);
 
   return {
     characters,

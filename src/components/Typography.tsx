@@ -11,6 +11,7 @@ export type TypographyProps = {
 
 const styleMap = StyleSheet.create({
   h: {
+    color: 'black',
     fontSize: 48,
     fontWeight: 'bold',
   },
