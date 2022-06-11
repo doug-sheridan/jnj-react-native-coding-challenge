@@ -39,6 +39,8 @@ const marvelRequest = ({
 
 export type GetCharactersParams = {
   nameStartsWith?: string | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
 };
 
 /**
@@ -46,35 +48,31 @@ export type GetCharactersParams = {
  */
 const getCharacters = async ({
   nameStartsWith = undefined,
+  limit = 20,
+  offset = 0,
 }: GetCharactersParams): Promise<any[]> => {
-  const response = await marvelRequest({
-    route: MARVEL_API_ROUTES.characters,
-    method: 'GET',
-    params: {
-      nameStartsWith,
-    },
-  });
-  if (response?.data?.data?.results) {
-    return response.data.data.results;
-  } else {
+  try {
+    const response = await marvelRequest({
+      route: MARVEL_API_ROUTES.characters,
+      method: 'GET',
+      params: {
+        nameStartsWith,
+        limit,
+        offset,
+      },
+    });
+    if (response?.data?.data?.results) {
+      return response.data.data.results;
+    } else {
+      return [];
+    }
+  } catch (e) {
     return [];
   }
 };
 
-/**
- * Gets a single Marvel character
- */
-const getCharacter = () => {
-  return marvelRequest({
-    route: MARVEL_API_ROUTES.characters,
-    method: 'GET',
-    params: {},
-  });
-};
-
 const MarvelApi = {
   getCharacters,
-  getCharacter,
 };
 
 export default MarvelApi;

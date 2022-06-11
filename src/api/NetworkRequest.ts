@@ -23,9 +23,5 @@ export const networkRequest = async ({
     headers,
   };
   // console.log('config: ' + JSON.stringify(config, null, 2));
-  try {
-    return await axios(config);
-  } catch (err) {
-    console.error(err);
-  }
+  return axios(config);
 };

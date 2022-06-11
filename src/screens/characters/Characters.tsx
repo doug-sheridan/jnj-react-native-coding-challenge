@@ -3,11 +3,16 @@ import React from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {CharacterListItem} from './CharacterListItem';
 import {Typography} from '../../components/Typography';
+import {Loading} from '../../components/Loading';
 
 export type CharactersProps = {
   onPress: (character: MarvelCharacter) => void;
   characters: MarvelCharacter[];
   charactersLoading: boolean;
+  charactersError?: string | undefined;
+  reloadData: () => void; // pull to refresh callback
+  loadNextPage: () => void; // infinite scrolling, fetch next page
+  nextPageLoading?: boolean;
 };
 
 /**
@@ -17,10 +22,20 @@ export const Characters = ({
   onPress,
   characters,
   charactersLoading,
+  charactersError,
+  reloadData,
+  loadNextPage,
+  nextPageLoading,
 }: CharactersProps) => {
+  // @region callbacks
   const onRefresh = async () => {
-    console.log('onRefresh');
+    reloadData?.();
   };
+
+  const onEndReached = () => {
+    loadNextPage?.();
+  };
+  // @region callbacks
 
   const renderItem = ({item}: {item: MarvelCharacter}) => {
     return (
@@ -30,10 +45,6 @@ export const Characters = ({
     );
   };
 
-  const onEndReached = () => {
-    console.log('onEndReached');
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -41,15 +52,23 @@ export const Characters = ({
           Marvel Characters
         </Typography>
       </View>
-      <FlatList
-        style={styles.flatList}
-        contentContainerStyle={styles.flatListContent}
-        data={characters}
-        refreshing={charactersLoading}
-        onRefresh={onRefresh}
-        onEndReached={onEndReached}
-        renderItem={renderItem}
-      />
+      {!charactersError ? (
+        <FlatList
+          style={styles.flatList}
+          contentContainerStyle={styles.flatListContent}
+          data={characters}
+          refreshing={charactersLoading}
+          onRefresh={onRefresh}
+          onEndReached={onEndReached}
+          renderItem={renderItem}
+          ListFooterComponent={nextPageLoading ? <Loading /> : undefined}
+        />
+      ) : (
+        <View style={styles.errorContainer}>
+          <Typography variant="h">Whoops!</Typography>
+          <Typography variant="body">{charactersError}</Typography>
+        </View>
+      )}
     </View>
   );
 };
@@ -71,4 +90,9 @@ const styles = StyleSheet.create({
   },
   flatList: {},
   flatListContent: {},
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
