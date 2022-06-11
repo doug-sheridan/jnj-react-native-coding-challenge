@@ -1,4 +1,4 @@
-# React-Native Coding Challenge - J&J
+# J&J - React-Native Coding Challenge
 
 A take-home React-Native coding challenge for the Johnson & Johnson Health-Tech Team.
 
