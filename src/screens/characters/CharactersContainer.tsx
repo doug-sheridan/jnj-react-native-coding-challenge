@@ -11,11 +11,19 @@ export type NavigationProps = NativeStackScreenProps<
 >;
 
 export const CharactersContainer = ({navigation}: NavigationProps) => {
-  const characters = useCharacters();
+  const {characters, loading, error} = useCharacters();
 
   const onPress = (character: MarvelCharacter) => {
     navigation.navigate('Character', {character});
   };
 
-  return <Characters onPress={onPress} characters={characters} />;
+  return (
+    <Characters
+      {...{
+        onPress,
+        characters,
+        charactersLoading: loading,
+      }}
+    />
+  );
 };

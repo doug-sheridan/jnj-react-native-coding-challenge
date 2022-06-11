@@ -1,45 +1,74 @@
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {ReactNode} from 'react';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {CharacterListItem} from './CharacterListItem';
-import {Loading} from '../../components/Loading';
 import {Typography} from '../../components/Typography';
 
 export type CharactersProps = {
   onPress: (character: MarvelCharacter) => void;
   characters: MarvelCharacter[];
+  charactersLoading: boolean;
 };
 
 /**
  * The Characters list UI.
  */
-export const Characters = ({onPress, characters}: CharactersProps) => {
-  const renderCharactersList = (): ReactNode[] => {
-    const results: ReactNode[] = [];
-    characters.map((character: MarvelCharacter, i: number) =>
-      results.push(
-        <TouchableOpacity key={i} onPress={() => onPress(character)}>
-          <CharacterListItem character={character} />
-        </TouchableOpacity>,
-      ),
+export const Characters = ({
+  onPress,
+  characters,
+  charactersLoading,
+}: CharactersProps) => {
+  const onRefresh = async () => {
+    console.log('onRefresh');
+  };
+
+  const renderItem = ({item}: {item: MarvelCharacter}) => {
+    return (
+      <TouchableOpacity onPress={() => onPress(item)}>
+        <CharacterListItem character={item} />
+      </TouchableOpacity>
     );
-    return results;
+  };
+
+  const onEndReached = () => {
+    console.log('onEndReached');
   };
 
   return (
-    <ScrollView contentContainerStyle={style.container}>
-      <Typography variant="h">Marvel Characters</Typography>
-      {characters && characters.length > 0 ? (
-        renderCharactersList()
-      ) : (
-        <Loading />
-      )}
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Typography variant="h" style={styles.header}>
+          Marvel Characters
+        </Typography>
+      </View>
+      <FlatList
+        style={styles.flatList}
+        contentContainerStyle={styles.flatListContent}
+        data={characters}
+        refreshing={charactersLoading}
+        onRefresh={onRefresh}
+        onEndReached={onEndReached}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    paddingVertical: 60,
+    flex: 1,
+    backgroundColor: 'white',
   },
+  headerContainer: {
+    borderBottomWidth: 1,
+    borderColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
+    marginTop: 80,
+    marginBottom: 20,
+  },
+  flatList: {},
+  flatListContent: {},
 });
