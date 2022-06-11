@@ -41,8 +41,8 @@ You have until 11:59pm PDT on Mon Jun 13 to complete this challenge. When you ar
 
 ### Progress Tracker
 
-- ❌ Infinite scrolling list
-- ❌ Pull list to refresh data
+- ✅ Infinite scrolling list
+- ✅ Pull list to refresh data
 - ✅ Show item detail view when tapping on any item in the list
 - ✅ Show any media associated with the item
 - **Stretch goals:**
