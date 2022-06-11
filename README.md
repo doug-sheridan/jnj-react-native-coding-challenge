@@ -48,3 +48,11 @@ You have until 11:59pm PDT on Mon Jun 13 to complete this challenge. When you ar
 - **Stretch goals:**
   - ❌ Cache/Persist data locally across app launches
   - ❌ Responsive UI wrt different device sizes
+
+### Key Libraries Used
+
+- Persistence
+  - AsyncStorage
+  - React Context API
+- Networking
+  - Axios

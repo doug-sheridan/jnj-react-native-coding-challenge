@@ -1,6 +1,10 @@
 import {ActivityIndicator} from 'react-native';
 import React from 'react';
 
-export const Loading = () => {
-  return <ActivityIndicator />;
+export type LoadingProps = {
+  color?: string;
+};
+
+export const Loading = ({color = undefined}: LoadingProps) => {
+  return <ActivityIndicator color={color} />;
 };

@@ -34,7 +34,7 @@ export const useCharacters = () => {
     setError(undefined);
     MarvelApi.getCharacters({
       limit: pageSize,
-      offset: characters.length,
+      offset: 0,
     })
       .then(chars => {
         if (chars?.length > 0) {

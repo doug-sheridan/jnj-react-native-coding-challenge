@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {CharacterContainer} from './src/screens/character/CharacterContainer';
 import {CharactersContainer} from './src/screens/characters/CharactersContainer';
 import {MarvelCharacter} from './src/api/marvel/models/MarvelCharacter.model';
+import {Colors} from './src/constants';
 
 export type RootStackParamList = {
   Characters: {};
@@ -21,7 +22,16 @@ const App = () => {
           component={CharactersContainer}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="Character" component={CharacterContainer} />
+        <Stack.Screen
+          name="Character"
+          component={CharacterContainer}
+          options={{
+            headerStyle: {
+              backgroundColor: Colors.primary,
+            },
+            headerTintColor: 'white',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

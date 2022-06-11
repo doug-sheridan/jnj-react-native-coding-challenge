@@ -1,24 +1,22 @@
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {Typography} from '../../components/Typography';
+import {getCharacterImageSource} from '../../utils/FormatUtilts';
 
 export type CharacterProps = {
   character: MarvelCharacter;
 };
 
 export const Character = ({character}: CharacterProps) => {
-  console.log('Character: ' + JSON.stringify(character));
-
-  const imageSource =
-    character.thumbnail.path +
-    '/portrait_incredible.' +
-    character.thumbnail.extension;
-  console.log('imageSource: ' + imageSource);
+  const imageSource = useMemo(
+    () => getCharacterImageSource(character),
+    [character],
+  );
 
   return (
     <View>
-      <Image source={{uri: imageSource}} style={styles.image} />
+      <Image source={imageSource} style={styles.image} />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.spacer} />
         <View style={styles.scrollContent}>

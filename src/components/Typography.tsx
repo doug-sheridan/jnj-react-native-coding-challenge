@@ -5,6 +5,7 @@ export type TypographyProps = {
   variant: 'h' | 'body';
   children?: string;
   style?: StyleProp<TextStyle>;
+  color?: string;
 };
 
 const styleMap = StyleSheet.create({
@@ -17,6 +18,22 @@ const styleMap = StyleSheet.create({
   },
 });
 
-export const Typography = ({variant, children, style}: TypographyProps) => {
-  return <Text style={[style, styleMap[variant]]}>{children}</Text>;
+export const Typography = ({
+  variant,
+  children,
+  style,
+  color,
+}: TypographyProps) => {
+  return (
+    <Text
+      style={[
+        style,
+        styleMap[variant],
+        {
+          color: color ? color : undefined,
+        },
+      ]}>
+      {children}
+    </Text>
+  );
 };

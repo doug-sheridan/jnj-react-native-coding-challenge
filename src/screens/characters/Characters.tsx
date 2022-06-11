@@ -1,9 +1,18 @@
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {CharacterListItem} from './CharacterListItem';
 import {Typography} from '../../components/Typography';
 import {Loading} from '../../components/Loading';
+import {Colors} from '../../constants';
 
 export type CharactersProps = {
   onPress: (character: MarvelCharacter) => void;
@@ -47,18 +56,29 @@ export const Characters = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Typography variant="h" style={styles.header}>
-          Marvel Characters
-        </Typography>
-      </View>
+      <SafeAreaView style={styles.headerContainer}>
+        <Image
+          resizeMode="contain"
+          source={require('../../../assets/marvel-logo.png')}
+          style={styles.logo}
+        />
+      </SafeAreaView>
       {!charactersError ? (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={charactersLoading}
+              onRefresh={onRefresh}
+              title="Refresh List.."
+              tintColor="white"
+              titleColor="#white"
+            />
+          }
           style={styles.flatList}
           contentContainerStyle={styles.flatListContent}
           data={characters}
-          refreshing={charactersLoading}
-          onRefresh={onRefresh}
+          // refreshing={charactersLoading}
+          // onRefresh={onRefresh}
           onEndReached={onEndReached}
           renderItem={renderItem}
           ListFooterComponent={nextPageLoading ? <Loading /> : undefined}
@@ -78,17 +98,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  logo: {
+    width: 100,
+    height: 100,
+  },
   headerContainer: {
+    backgroundColor: Colors.primary,
     borderBottomWidth: 1,
     borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  header: {
-    marginTop: 80,
-    marginBottom: 20,
+  flatList: {
+    backgroundColor: 'black',
   },
-  flatList: {},
   flatListContent: {},
   errorContainer: {
     flex: 1,
