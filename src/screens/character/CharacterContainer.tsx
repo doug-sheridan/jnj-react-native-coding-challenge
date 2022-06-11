@@ -2,8 +2,13 @@ import React, {useEffect} from 'react';
 import {Character} from './Character';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../App';
-import {Linking, Share, TouchableOpacity} from 'react-native';
-import {Typography} from '../../components/Typography';
+import {
+  Image,
+  Linking,
+  Share,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
 export type NavigationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -15,6 +20,14 @@ export const CharacterContainer = ({route, navigation}: NavigationProps) => {
   const characterMoreInfoUrl = character?.urls?.find(
     url => url?.type === 'comiclink',
   )?.url!;
+
+  const ShareIcon = () => (
+    <Image
+      source={require('../../../assets/share-icn.png')}
+      resizeMode="contain"
+      style={styles.shareIcn}
+    />
+  );
 
   const onShare = async () => {
     try {
@@ -43,9 +56,7 @@ ${characterMoreInfoUrl}`,
       title: character.name,
       headerRight: () => (
         <TouchableOpacity onPress={onShare}>
-          <Typography variant="body" color="white">
-            Share
-          </Typography>
+          <ShareIcon />
         </TouchableOpacity>
       ),
     });
@@ -57,3 +68,10 @@ ${characterMoreInfoUrl}`,
 
   return <Character character={character} moreInfoOnPress={moreInfoOnPress} />;
 };
+
+const styles = StyleSheet.create({
+  shareIcn: {
+    height: 25,
+    width: 25,
+  },
+});
