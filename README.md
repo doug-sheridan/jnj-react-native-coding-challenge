@@ -47,7 +47,7 @@ You have until 11:59pm PDT on Mon Jun 13 to complete this challenge. When you ar
 - ✅ Show any media associated with the item
 - **Stretch goals:**
   - ✅ Cache/Persist data locally across app launches
-  - ❌ Responsive UI wrt different device sizes
+  - ✅ Responsive UI wrt different device sizes
 
 ### Key Libraries Used
 

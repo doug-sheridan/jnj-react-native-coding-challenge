@@ -3,12 +3,14 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import React, {useMemo} from 'react';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {Typography} from '../../components/Typography';
 import {getCharacterImageSource} from '../../utils/FormatUtilts';
+import {isTablet} from '../../utils/DeviceInfoUtils';
 
 export type CharacterProps = {
   character: MarvelCharacter;
@@ -16,19 +18,33 @@ export type CharacterProps = {
 };
 
 export const Character = ({character, moreInfoOnPress}: CharacterProps) => {
+  const {width} = useWindowDimensions();
+  const tabletPadding = width / 5;
+
   const imageSource = useMemo(
     () => getCharacterImageSource(character),
     [character],
   );
 
-  console.log('character: ' + JSON.stringify(character));
-
   return (
     <View style={styles.container}>
-      <Image source={imageSource} style={styles.image} />
+      <Image
+        source={imageSource}
+        style={styles.image}
+        resizeMode={isTablet ? 'contain' : 'cover'}
+      />
       <ScrollView style={styles.scrollView}>
         <View style={styles.spacer} />
-        <View style={styles.scrollContent}>
+        <View
+          style={[
+            styles.scrollContent,
+            isTablet
+              ? {
+                  paddingHorizontal: tabletPadding,
+                  paddingVertical: tabletPadding / 4,
+                }
+              : undefined,
+          ]}>
           <View style={{marginBottom: 20}}>
             <Typography variant="h">{character?.name}</Typography>
             <Typography variant="body">
@@ -36,7 +52,7 @@ export const Character = ({character, moreInfoOnPress}: CharacterProps) => {
             </Typography>
           </View>
           <View style={styles.comicsContainer}>
-            <Typography variant="body" bold>
+            <Typography variant="body" bold style={{marginBottom: 10}}>
               Comics
             </Typography>
             {character.comics.items?.length > 0 ? (
@@ -49,11 +65,21 @@ export const Character = ({character, moreInfoOnPress}: CharacterProps) => {
               <Typography variant="body">No comics found.</Typography>
             )}
           </View>
-          <TouchableOpacity
-            style={styles.moreInfoButton}
-            onPress={moreInfoOnPress}>
-            <Typography variant="body">📕 More Info</Typography>
-          </TouchableOpacity>
+          <View
+            style={
+              isTablet
+                ? {
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }
+                : undefined
+            }>
+            <TouchableOpacity
+              style={[styles.moreInfoButton, isTablet ? {} : undefined]}
+              onPress={moreInfoOnPress}>
+              <Typography variant="body">👊 Punch for More Info...</Typography>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -71,7 +97,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 500,
   },
-  scrollView: {},
+  scrollView: {
+    height: '100%',
+  },
   spacer: {
     height: 500,
   },
@@ -89,10 +117,8 @@ const styles = StyleSheet.create({
   },
   moreInfoButton: {
     backgroundColor: '#d3d3d3',
-    height: 60,
-    width: '100%',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 40,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 19,

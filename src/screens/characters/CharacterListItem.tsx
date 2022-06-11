@@ -3,6 +3,7 @@ import {Image, StyleSheet, View} from 'react-native';
 import {MarvelCharacter} from '../../api/marvel/models/MarvelCharacter.model';
 import {Typography} from '../../components/Typography';
 import {getCharacterImageSource} from '../../utils/FormatUtilts';
+import {isTablet} from '../../utils/DeviceInfoUtils';
 
 export type CharacterListItemProps = {character: MarvelCharacter};
 
@@ -13,7 +14,15 @@ export const CharacterListItem = ({character}: CharacterListItemProps) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        isTablet
+          ? {
+              height: 300,
+            }
+          : undefined,
+      ]}>
       <Image style={styles.image} source={imageSource} />
       <View style={styles.scrim} />
       <Typography variant="body" style={styles.text} color="white">
@@ -28,7 +37,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     marginBottom: 1,
-    borderColor: 'black',
+    borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
   },

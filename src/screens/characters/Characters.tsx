@@ -14,6 +14,7 @@ import {Typography} from '../../components/Typography';
 import {Loading} from '../../components/Loading';
 import {Colors} from '../../constants';
 
+// true
 export type CharactersProps = {
   onPress: (character: MarvelCharacter) => void;
   characters: MarvelCharacter[];
@@ -81,7 +82,13 @@ export const Characters = ({
             data={characters}
             onEndReached={onEndReached}
             renderItem={renderItem}
-            ListFooterComponent={nextPageLoading ? <Loading /> : undefined}
+            ListFooterComponent={
+              nextPageLoading ? (
+                <View style={{paddingVertical: 40}}>
+                  <Loading />
+                </View>
+              ) : undefined
+            }
           />
         ) : (
           <View style={styles.loadingContainer}>
