@@ -9,6 +9,7 @@ export type TypographyProps = {
 const styleMap = StyleSheet.create({
   h: {
     fontSize: 32,
+    fontWeight: 'bold',
   },
   body: {
     fontSize: 24,
