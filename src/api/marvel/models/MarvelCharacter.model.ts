@@ -13,4 +13,8 @@ export type MarvelCharacter = {
   comics: {
     items: ComicItem[];
   };
+  urls: {
+    type: string;
+    url: string;
+  }[];
 };

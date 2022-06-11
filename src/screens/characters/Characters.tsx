@@ -64,25 +64,30 @@ export const Characters = ({
         />
       </SafeAreaView>
       {!charactersError ? (
-        <FlatList
-          refreshControl={
-            <RefreshControl
-              refreshing={charactersLoading}
-              onRefresh={onRefresh}
-              title="Refresh List.."
-              tintColor="white"
-              titleColor="#white"
-            />
-          }
-          style={styles.flatList}
-          contentContainerStyle={styles.flatListContent}
-          data={characters}
-          // refreshing={charactersLoading}
-          // onRefresh={onRefresh}
-          onEndReached={onEndReached}
-          renderItem={renderItem}
-          ListFooterComponent={nextPageLoading ? <Loading /> : undefined}
-        />
+        !charactersLoading ? (
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={charactersLoading}
+                onRefresh={onRefresh}
+                title="Refresh List.."
+                tintColor="white"
+                titleColor="#white"
+              />
+            }
+            refreshing={charactersLoading}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatListContent}
+            data={characters}
+            onEndReached={onEndReached}
+            renderItem={renderItem}
+            ListFooterComponent={nextPageLoading ? <Loading /> : undefined}
+          />
+        ) : (
+          <View style={styles.loadingContainer}>
+            <Loading />
+          </View>
+        )
       ) : (
         <View style={styles.errorContainer}>
           <Typography variant="h">Whoops!</Typography>
@@ -115,6 +120,12 @@ const styles = StyleSheet.create({
   flatListContent: {},
   errorContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
